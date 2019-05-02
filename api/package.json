@@ -1,0 +1,34 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "API REST server for Books",
+  "main": "./dist/index.js",
+  "scripts": {
+    "build": "rm -rf dist && webpack --mode development --config ./webpack.dev.config.js",
+    "start": "node ./dist/index.js",
+    "nodemon": "ls -la ./dist/ && nodemon ./dist/index.js",
+    "watch:backEnd": "webpack --watch --mode \"development\" --config ./webpack.dev.config.js && nodemon ./dist/index.js",
+    "start:backEnd": "npm-run-all -p nodemon watch:backEnd",
+    "fullStart": "npm run build && npm run start:backEnd"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/preset-env": "^7.4.4",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.0.0",
+    "express": "^4.16.4",
+    "helmet": "^3.17.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.4",
+    "babel-loader": "^8.0.5",
+    "webpack": "^4.30.0",
+    "webpack-cli": "^3.3.1",
+    "webpack-node-externals": "^1.7.2",
+    "clean-webpack-plugin": "^2.0.1",
+    "npm-run-all": "^4.1.5"
+  }
+}
