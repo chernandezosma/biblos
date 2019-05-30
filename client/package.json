@@ -1,0 +1,14 @@
+{
+  "name": "client",
+  "version": "1.0.0",
+  "description": "React Client for Books app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-dev": "webpack --mode \"development\" --config webpack.dev.config.js",
+    "build-prod": "webpack --mode \"development\" --config webpack.prod.config.js",
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "ISC"
+}

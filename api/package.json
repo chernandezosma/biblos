@@ -1,0 +1,41 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "API REST server for Books",
+  "main": "./dist/index.js",
+  "scripts": {
+    "build": "rm -rf dist && webpack --mode development --config ./webpack.dev.config.js",
+    "start": "node ./dist/index.js",
+    "nodemon": "ls -la ./dist/ && nodemon ./dist/index.js",
+    "watch:backEnd": "webpack --watch --mode \"development\" --config ./webpack.dev.config.js && nodemon ./dist/index.js",
+    "start:backEnd": "npm-run-all -p nodemon watch:backEnd",
+    "start:dev": "npm run build && npm run start:backEnd"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/preset-env": "^7.4.5",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.0.0",
+    "express": "^4.17.0",
+    "helmet": "^3.18.0",
+    "mongoose": "^5.5.11",
+    "morgan": "^1.9.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.5",
+    "babel-loader": "^8.0.6",
+    "eslint": "^5.16.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.17.3",
+    "eslint-plugin-node": "^9.1.0",
+    "eslint-plugin-promise": "^4.1.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "npm-run-all": "^4.1.5",
+    "webpack": "^4.32.2",
+    "webpack-cli": "^3.3.2",
+    "webpack-node-externals": "^1.7.2"
+  }
+}
