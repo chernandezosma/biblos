@@ -8,14 +8,12 @@
  * @subpackage  Routes
  */
 
-import apiRoutes from './apiv1'
 import express from 'express'
+import bookRoutes from './books'
+import globalRoutes from './global'
 
 let router = express.Router()
-router.use('/v1/', apiRoutes)
-
-router.use(function (req, res, next) {
-  res.send(res.locals.data)
-})
+router.use('/', globalRoutes)
+router.use('/api/v1/', bookRoutes)
 
 export default router

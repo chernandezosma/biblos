@@ -8,23 +8,33 @@
  */
 
 import express from 'express'
-import * as HTTP_CODES from '../config/httpcodes.js'
+import * as HTTP_CODES from '../config/httpcodes'
+import * as constants from '../config/biblos'
 
 const bookRoutes = express.Router()
-bookRoutes.route('/').get(function (req, res, next) {
-  // res.status(HTTP_CODES.HTTP_INTERNAL_SERVER_ERROR)
-  // res.locals.data = {
-  //   'code': 4895,
-  //   'message': 'Something was wrong',
-  // }
+bookRoutes.route('/').get(function (req, res) {
+  res.status = HTTP_CODES.HTTP_OK
+  res.locals.custom = true
+  res.locals.data = { message: 'Biblo API version ' + constants.API_VERSION }
+  res.json(res.locals.data)
+})
 
-  res.status(HTTP_CODES.HTTP_OK)
-  res.locals.data = [
-    'books listing...',
-  ]
-
-  // Always call the next middleware, which compose the response.
-  next()
+bookRoutes.route('/books').get(function (req, res) {
+  res.status = HTTP_CODES.HTTP_OK
+  res.locals.custom = true
+  res.locals.data = {
+    data: [
+      {
+        id: 1,
+        title: '20000 leguas de viaje submarino'
+      },
+      {
+        id: 2,
+        title: 'De la tierra a la luna'
+      }
+    ]
+  }
+  res.json(res.locals.data)
 })
 
 export default bookRoutes
