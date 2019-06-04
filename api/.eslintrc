@@ -3,10 +3,18 @@
     "es6": true,
     "node": true
   },
-  "extends": "standard",
+  "extends": "eslint:recommended",
+  "parser": "babel-eslint",
   "globals": {
     "Atomics": "readonly",
     "SharedArrayBuffer": "readonly"
+  },
+  "ecmaFeatures": {
+    "jsx": true,
+    "modules": true,
+    "arrowFunctions": true,
+    "classes": true,
+    "spread": true
   },
   "parserOptions": {
     "ecmaVersion": 2018,
