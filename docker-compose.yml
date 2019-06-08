@@ -40,7 +40,7 @@ services:
     restart: always
     container_name: mongodb
     volumes:
-      - ./mongo/data-node:/data/db
+      - ./mongo/data:/data/db
     ports:
       - '27017:27017'
     command: mongod --smallfiles
