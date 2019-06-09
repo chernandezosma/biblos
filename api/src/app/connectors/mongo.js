@@ -24,13 +24,12 @@ export default class MongooseConnection {
    *
    * @name .constructor()
    * @constructor
-   * @param {Configuration} opts - Options to initialize _MongooseConnection_.
+   *
    * @api public
    */
-  constructor (opts) {
+  constructor () {
 
-    this.config = Object.assign(envOpts, MONGO_DEFAULT_CONFIG, (opts || {}))
-    this.currentEnvConfiguration = this._getEnv()
+    this.config = Object.assign(envOpts, MONGO_DEFAULT_CONFIG)
     this.connection = null
 
     /**
@@ -54,7 +53,7 @@ export default class MongooseConnection {
    */
   connect = () => {
     return new Promise((resolve, reject) => {
-      const options = this.currentEnvConfiguration.options
+      const options = this.config.connectOptions.options
       if (!this.connection) {
         this.connection = mongoose.connection
       }
@@ -106,15 +105,6 @@ export default class MongooseConnection {
   /* -------------------------------------------------------------------------------------- */
   /* INTERNAL HELPER METHODS                                                                */
   /* -------------------------------------------------------------------------------------- */
-  /**
-   * Return the object for the current environment.
-   *
-   * @returns {*}
-   * @private
-   */
-  _getEnv = () => {
-    return this.config.connectOptions.environment[process.env.NODE_ENV]
-  }
 
   /**
    * Build and return the Mongo string to connect to the database.
@@ -137,10 +127,10 @@ export default class MongooseConnection {
    * @private
    */
   _getMongoUri_UserPwd = () => {
-    return (this.currentEnvConfiguration.options.auth.username &&
-      this.currentEnvConfiguration.options.auth.password)
-      ? this.currentEnvConfiguration.options.auth.username + ':' +
-      this.currentEnvConfiguration.options.auth.password + '@'
+    return (this.config.connectOptions.options.auth.username &&
+      this.config.connectOptions.options.auth.password)
+      ? this.config.connectOptions.options.auth.username + ':' +
+      this.config.connectOptions.options.auth.password + '@'
       : ''
   }
 
@@ -153,9 +143,9 @@ export default class MongooseConnection {
    */
   _getMongoUri_Hosts = () => {
     // Todo: Allow multiple hosts according to https://docs.mongodb.com/manual/reference/connection-string/
-    return this.currentEnvConfiguration.host +
-      (this.currentEnvConfiguration.options.useNewUrlParser ? ':' +
-        this.currentEnvConfiguration.port : '')
+    return this.config.connectOptions.host +
+      (this.config.connectOptions.options.useNewUrlParser ? ':' +
+        this.config.connectOptions.port : '')
   }
 
   /**
@@ -165,14 +155,14 @@ export default class MongooseConnection {
    * @private
    */
   _getMongoUri_Database = () => {
-    return (this.currentEnvConfiguration.database)
-      ? `/${this.currentEnvConfiguration.database}`
+    return (this.config.connectOptions.database)
+      ? `/${this.config.connectOptions.database}`
       : ''
   }
 
   _composeOptionsforConnection = () => {
     return {
-      options: this.currentEnvConfiguration.options,
+      options: this.config.connectOptions.options,
     }
   }
 
