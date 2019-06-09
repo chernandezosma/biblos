@@ -29,6 +29,8 @@ services:
       - mongodb
     ports:
       - 3000:3000
+    links:
+      - mongodb
     volumes:
       - ./api:/opt/app
       - notused:/opt/app/node_modules
@@ -36,14 +38,14 @@ services:
       - dockerNetwork
 
   mongodb:
-    image: mongo:latest
+    image: mongo:4.0.10
     restart: always
     container_name: mongodb
     volumes:
       - ./mongo/data:/data/db
     ports:
       - '27017:27017'
-    command: mongod --smallfiles
+    command: mongod --smallfiles --bind_ip_all
     networks:
       - dockerNetwork
 

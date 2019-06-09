@@ -1,4 +1,4 @@
-FROM node:latest
+FROM node:10.16.0
 
 RUN mkdir -p /opt/app
 RUN apt-get -q update && apt-get -qy install netcat vim less

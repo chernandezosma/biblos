@@ -22,7 +22,8 @@ app.use(http404Handler)
 app.use(errorHandler)
 
 let mongooseConnection = new MongooseConnection()
-mongooseConnection.connect().then(connection => {
+
+mongooseConnection.connect().then(() => {
   app.listen(APP_PORT, (port, err) => {
     if (err) {
       // eslint-disable-next-line no-console
@@ -31,14 +32,14 @@ mongooseConnection.connect().then(connection => {
       // eslint-disable-next-line no-console
       console.log(`Biblos is listening at port ` + APP_PORT)
       // eslint-disable-next-line no-console
-      console.log('Press Ctrl+C to quit.')
+      console.log('It is connected to Mongo DB')
       // eslint-disable-next-line no-console
-      console.log('***** CONNECTED *****')
-
+      console.log('Press Ctrl+C to quit.')
     }
   })
 }).catch(err => {
   // eslint-disable-next-line no-console
-  console.log('***** NOT CONNECTED *****')
+  console.log('Was not able to connect to Mongo DB.')
+  // eslint-disable-next-line no-console
   console.log(err)
 })

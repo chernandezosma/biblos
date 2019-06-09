@@ -43,7 +43,6 @@ export default class MongooseConnection {
     this.MONGO_DEFAULT_CONFIG = MONGO_DEFAULT_CONFIG
 
     mongoose.Promise = global.Promise
-
   }
 
   /**
@@ -59,9 +58,6 @@ export default class MongooseConnection {
       if (!this.connection) {
         this.connection = mongoose.connection
       }
-      console.log(options);
-      console.log(this._getMongoUri())
-
       mongoose.connect(this._getMongoUri(), options).
         then(() => resolve(this.connection)).
         catch(err => reject(err))
@@ -75,7 +71,7 @@ export default class MongooseConnection {
    * but the existing connection will be re-used and returned.
    *
    * @name .get()
-   * @returns {Promise<NavtiveConnection,Error>} - Returns the connection to MongoDB.
+   * @returns {Promise<Mongoose.connection>|Promise} - Returns the connection to MongoDB.
    * @api public
    */
   get = () => {
@@ -92,7 +88,7 @@ export default class MongooseConnection {
    * @returns {Promise<void,Error>}
    * @api public
    */
-  disconnect () {
+  disconnect = () => {
     return mongoose.disconnect()
   }
 
