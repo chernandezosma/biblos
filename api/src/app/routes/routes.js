@@ -9,12 +9,13 @@
  */
 
 import express from 'express'
-import bookRoutes from './books'
+import apiRoutes from './api'
 import globalRoutes from './global'
-import auth from '../app/middlewares/auth'
+import auth from '../middlewares/auth'
 
 let router = express.Router()
+
 router.use('/', globalRoutes)
-router.use('/api/v1/', auth, bookRoutes)
+router.use('/api/v1/', auth, apiRoutes)
 
 export default router

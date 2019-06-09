@@ -7,7 +7,7 @@
  * @subpackage  Handlers
  */
 
-import * as HTTP_CODES from '../../config/httpcodes.js'
+import * as HTTP_CODES from '../config/httpcodes.js'
 
 // assume 404 since no middleware responded
 const http404Handler = function (req, res, next) {

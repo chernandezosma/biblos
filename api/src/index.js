@@ -3,10 +3,10 @@ import dotEnv from 'dotenv'
 import logger from 'morgan'
 import bodyparser from 'body-parser'
 
-import { APP_PORT } from './config/biblos'
+import { APP_PORT } from './app/config/biblos'
 import MongooseConnection from './app/connectors/mongo'
 
-import routes from './routes/routes'
+import routes from './app/routes/routes'
 import { errorHandler } from './app/handlers/errorhandler'
 import http404Handler from './app/handlers/404handler'
 

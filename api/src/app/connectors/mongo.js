@@ -8,7 +8,7 @@
  */
 
 import mongoose from 'mongoose'
-import MONGO_DEFAULT_CONFIG from '../../config/mongo'
+import MONGO_DEFAULT_CONFIG from '../config/mongo'
 
 const envOpts = {}
 

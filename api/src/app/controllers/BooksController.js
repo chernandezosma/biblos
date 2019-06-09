@@ -1,5 +1,5 @@
 /**
- * Biblos Controller.
+ * Books Controller.
  *
  * @version     May 2019
  * @category    Controllers
@@ -7,8 +7,7 @@
  * @subpackage  Controllers
  */
 
-import * as constants from '../../config/biblos'
-import * as HTTP_CODES from '../../config/httpcodes'
+import * as HTTP_CODES from '../config/httpcodes'
 
 export default class BooksController {
 
@@ -17,11 +16,12 @@ export default class BooksController {
    *
    * @returns {{product: string, version: string}}
    */
-  getVersion  = (req, res) => {
+  getRoot  = (req, res) => {
     res.status = HTTP_CODES.HTTP_OK
     res.locals.data = {
-      'product': 'Biblos API',
-      'version': constants.API_VERSION
+      'data': {
+        'message': 'Books Root'
+      }
     }
 
     return res
@@ -32,7 +32,7 @@ export default class BooksController {
    *
    * @returns {{data: {books: *[]}}}
    */
-  getAllBooks = (req, res) => {
+  getAll = (req, res) => {
     res.status = HTTP_CODES.HTTP_OK
     res.locals.data = {
       'data': {

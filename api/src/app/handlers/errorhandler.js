@@ -7,7 +7,7 @@
  * @subpackage  Error habdlers.
  */
 
-import * as HTTP_CODES from '../../config/httpcodes.js'
+import * as HTTP_CODES from '../config/httpcodes.js'
 
 const errorHandler = function (err, req, res) {
   // set locals, only providing error in development

@@ -7,7 +7,7 @@
  * @subpackage  Error habdlers.
  */
 
-import { APP_PORT } from '../../config/app'
+import { APP_PORT } from '../config/biblos'
 import logger from 'morgan'
 
 export function onError (error) {
@@ -23,11 +23,13 @@ export function onError (error) {
   switch (error.code) {
     case 'EACCES':
       logger.error(bind + ' requires elevated privileges')
+      // eslint-disable-next-line no-console
       console.error(bind + ' requires elevated privileges')
       process.exit(1)
       break
     case 'EADDRINUSE':
       logger.error(bind + ' is already in use')
+      // eslint-disable-next-line no-console
       console.error(bind + ' is already in use')
       process.exit(1)
       break

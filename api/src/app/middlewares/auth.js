@@ -6,9 +6,9 @@
  * @package     Biblos
  * @subpackage  Middlewares
  */
-import { HTTP_OK } from '../../config/httpcodes'
 
 const auth = (req, res, next) => {
+  // eslint-disable-next-line no-console
   console.log('Auth method');
   next()
 }
