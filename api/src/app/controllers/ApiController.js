@@ -7,8 +7,8 @@
  * @subpackage  Controllers
  */
 
-import * as constants from '../config/biblos'
 import * as HTTP_CODES from '../config/httpcodes'
+import { API_VERSION } from '../config/biblos'
 
 export default class ApiController {
 
@@ -17,11 +17,22 @@ export default class ApiController {
    *
    * @returns {{product: string, version: string}}
    */
-  getVersion  = (req, res) => {
+  getVersion = (req, res) => {
     res.status = HTTP_CODES.HTTP_OK
     res.locals.data = {
-      'product': 'Biblos API',
-      'version': constants.API_VERSION
+      'title': 'Biblos API',
+      'description': 'This is the Biblos API layer.',
+      'termsOfService': 'http://www.elestadoweb.com/terms/',
+      'contact': {
+        'name': 'El Estado Web',
+        'url': 'http://www.elestadoweb.com/support',
+        'email': 'info@elestadoweb.com',
+      },
+      'license': {
+        'name': 'GNU 3.0',
+        'url': 'http://www.gnu.org/licenses/gpl-3.0.html',
+      },
+      'version': API_VERSION,
     }
 
     return res
