@@ -38,14 +38,20 @@ services:
       - dockerNetwork
 
   mongodb:
-    image: mongo:4.0.10
+    #    image: mongo:4.0.10
+    build:
+      context: ./mongo
+      dockerfile: Dockerfile
+    env_file:
+      - ./api/.env
     restart: always
     container_name: mongodb
     volumes:
       - ./mongo/data:/data/db
+      - ./mongo/mongo.conf:/etc/mongod.conf
     ports:
-      - '27017:27017'
-    command: mongod --smallfiles --bind_ip_all
+      - 27017:27017
+#    command: mongod --config /etc/mongo.conf --smallfiles --bind_ip_all && mongod use biblos && mongod
     networks:
       - dockerNetwork
 

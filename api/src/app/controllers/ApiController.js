@@ -21,6 +21,7 @@ export default class ApiController {
     res.status = HTTP_CODES.HTTP_OK
     res.locals.data = {
       'title': 'Biblos API',
+      'version': API_VERSION,
       'description': 'This is the Biblos API layer.',
       'termsOfService': 'http://www.elestadoweb.com/terms/',
       'contact': {
@@ -32,7 +33,6 @@ export default class ApiController {
         'name': 'GNU 3.0',
         'url': 'http://www.gnu.org/licenses/gpl-3.0.html',
       },
-      'version': API_VERSION,
     }
 
     return res
