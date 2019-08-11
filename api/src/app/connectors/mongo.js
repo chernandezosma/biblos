@@ -11,7 +11,6 @@ import mongoose from 'mongoose'
 import MONGO_DEFAULT_CONFIG from '../config/mongo'
 
 const envOpts = {}
-const retryTimes = 10
 
 /**
  * @class MongooseConnection
@@ -54,36 +53,15 @@ export default class MongooseConnection {
    * @api public
    */
   connect = () => {
-
-    return this.connectWithRetry()
-
-  }
-
-  connectWithRetry = () => {
     return new Promise((resolve, reject) => {
-      const options = this.config.connectOptions.options
-
-      // eslint-disable-next-line no-console
-      console.log('config => ', options)
-
+      const options = {};
       if (!this.connection) {
-        this.connection = mongoose.connection
+        this.connection = mongoose.connection;
       }
-      mongoose.connect(
-        this._getMongoUri(), options).
-        then(() => resolve(this.connection)).
-        catch((err) => {
-          this.retries++
-          // eslint-disable-next-line no-console
-          console.log('Retrying the connection to server...')
-          // eslint-disable-next-line no-console
-          console.log('retries => ', this.retries)
-          if (this.retries >= retryTimes) {
-            reject(err)
-          }
-          setTimeout(this.connectWithRetry, 5000)
-        })
-    })
+      mongoose.connect(this._getMongoUri(), options)
+      .then(() => resolve(this.connection))
+      .catch(err => reject(err));
+    });
   }
 
   /**
