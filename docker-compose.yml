@@ -29,6 +29,7 @@ services:
       - mongodb
     ports:
       - 3000:3000
+      - 56745:56745
     links:
       - mongodb
     volumes:
