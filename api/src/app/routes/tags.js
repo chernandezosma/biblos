@@ -18,10 +18,23 @@ let tagsController = new TagController()
  *
  * @route: /tags/
  */
-tagsRouter.route('/').get(function (req, res) {
+tagsRouter.route('/').get((req, res) => {
 
   res.redirect('/api/v1/tags/tags')
 
+})
+
+tagsRouter.route('/julian').get(async (req, res) => {
+
+  const data = await(new Promise((resolve, reject)  => {
+    try {
+      resolve ('Hello Julián')
+    }catch (err) {
+      reject (err)
+    }
+  }));
+
+  await res.json(data);
 })
 
 /**
@@ -29,13 +42,20 @@ tagsRouter.route('/').get(function (req, res) {
  *
  * @route: /tags/
  */
-tagsRouter.route('/tags').get(function (req, res) {
-  res = tagsController.getAll(req, res)
-  res.json(res.locals.data)
+tagsRouter.route('/tags').get((req, res) => {
+
+  // eslint-disable-next-line no-console
+  console.log(' ====> before res => ', res)
+  let response = tagsController.getAll(req, res)
+
+  // eslint-disable-next-line no-console
+  console.log(' ====> after response => ', response)
+
+  res.json(response.locals.data)
 })
 
 
-tagsRouter.route('/tag').post(function (req, res){
+tagsRouter.route('/tag').post((req, res) => {
   res = tagsController.save(req, res)
   res.json(res.locals.data);
 })

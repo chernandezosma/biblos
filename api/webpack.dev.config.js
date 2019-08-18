@@ -1,20 +1,19 @@
-
 const path = require('path')
 const nodeExternals = require('webpack-node-externals')
 const dotEnv = require('dotenv')
-
 const config = dotEnv.config().parsed
 const targetDir = config.DIST_DIR || 'dist'
 const sourceDir = config.SOURCE_DIR || 'src'
 
 module.exports = {
-  entry: {
-    index: path.resolve(__dirname, sourceDir),
-  },
+  entry: [
+    'babel-polyfill',
+    path.resolve(__dirname, sourceDir)
+  ],
   output: {
     path: path.join(__dirname, targetDir),
     publicPath: '/',
-    filename: '[name].js',
+    filename: config.DIST_SCRIPT
   },
   target: 'node',
   node: {

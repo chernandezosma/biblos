@@ -10,12 +10,13 @@
 import TagModel from '../models/tags'
 import * as HTTP_CODES from '../config/httpcodes'
 import MongooseConnection from '../../app/connectors/mongo'
+import ApiController from './ApiController'
 
-export default class TagsController {
+export default class TagsController extends ApiController {
 
   constructor () {
+    super();
     this.client = new MongooseConnection()
-
   }
 
   /**
@@ -69,35 +70,19 @@ export default class TagsController {
     return res
   }
 
-  getAll = (req, res) => {
-
-    let resources;
+  getAll = () => {
 
     this.client.get()
-    TagModel.find({}, null).exec()
-    .then(function (tags) {
-      resources = res;
+
+    return TagModel.find({}, null).exec().then((tags) => {
       // eslint-disable-next-line no-console
       console.log('tags => ', tags)
-
-      resources.status = HTTP_CODES.HTTP_OK
-      resources.locals.data = {
-        'data': {
-          'tags': [
-            {
-              'code': tags.code,
-              'text': tags.text
-            }
-          ],
-        },
-      }
-
-      return resources;
-    })
-    .catch(function(err){
+      return tags
+    }).catch((err) => {
       // eslint-disable-next-line no-console
       console.log('ERROR:', err)
-    });
+    })
+
   }
 
   save = (req, res) => {
