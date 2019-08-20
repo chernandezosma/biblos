@@ -71,18 +71,13 @@ export default class TagsController extends ApiController {
   }
 
   getAll = () => {
-
     this.client.get()
 
     return TagModel.find({}, null).exec().then((tags) => {
-      // eslint-disable-next-line no-console
-      console.log('tags => ', tags)
       return tags
     }).catch((err) => {
-      // eslint-disable-next-line no-console
-      console.log('ERROR:', err)
+      throw err;
     })
-
   }
 
   save = (req, res) => {
