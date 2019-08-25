@@ -12,7 +12,7 @@ import TagController from '../controllers/TagsController'
 import * as HTTP_CODES from '../config/httpcodes'
 
 const tagsRouter = express.Router()
-let tagsController = new TagController()
+// let tagsController = new TagController()
 
 /**
  * Route for API root
@@ -32,29 +32,27 @@ tagsRouter.route('/').get((req, res) => {
  */
 tagsRouter.route('/tags').get(async(req, res) => {
 
+  const tagsController = new TagController()
+
   const data = await(new Promise((resolve, reject)  => {
     try {
-      let tags = tagsController.getAll(req, res)
       res.status = HTTP_CODES.HTTP_OK
-      res.locals.data = {
-        'data': {
-          'tags': [
-            tags,
-          ],
-        },
-      }
-
-      resolve ()
+      resolve (tagsController.getAll())
     }catch (err) {
+      res.status = HTTP_CODES.HTTP_INTERNAL_SERVER_ERROR
       reject (err)
     }
   }));
 
-  await res.json(data);
+  // await res.json(tagsController.jsonResponse(data));
+  await res.json(tagsController.getResponse(data));
 })
 
 
 tagsRouter.route('/tag').post((req, res) => {
+
+  const tagsController = new TagController()
+
   res = tagsController.save(req, res)
   res.json(res.locals.data);
 })

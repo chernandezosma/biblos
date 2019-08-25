@@ -19,23 +19,48 @@ export default class ApiController {
    */
   getVersion = (req, res) => {
     res.status = HTTP_CODES.HTTP_OK
-    res.locals.data = {
+    res.locals.data = this.getInfo()
+
+    return res
+  }
+
+  getInfo = () => {
+    return {
       'title': 'Biblos API',
       'version': API_VERSION,
       'description': 'This is the Biblos API layer.',
       'termsOfService': 'http://www.elestadoweb.com/terms/',
-      'contact': {
-        'name': 'El Estado Web',
-        'url': 'http://www.elestadoweb.com/support',
-        'email': 'info@elestadoweb.com',
-      },
-      'license': {
-        'name': 'GNU 3.0',
-        'url': 'http://www.gnu.org/licenses/gpl-3.0.html',
-      },
+      'contact': this.getContact(),
+      'licence': this.getLicence()
+    }
+  }
+
+  getContact = () => {
+    return {
+      'name': 'El Estado Web',
+      'url': 'http://www.elestadoweb.com/support',
+      'email': 'info@elestadoweb.com',
+    }
+  }
+
+  getLicence = () => {
+    return {
+      'name': 'GNU 3.0',
+      'url': 'http://www.gnu.org/licenses/gpl-3.0.html',
+    }
+  }
+
+  getBasicResponse = (data, error) => {
+
+    let response = this.getInfo()
+
+    if (error !== undefined) {
+      response.error = error
+
+      return response;
     }
 
-    return res
+    return response
   }
 
 }

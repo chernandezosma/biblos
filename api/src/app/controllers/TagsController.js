@@ -15,8 +15,10 @@ import ApiController from './ApiController'
 export default class TagsController extends ApiController {
 
   constructor () {
+
     super();
     this.client = new MongooseConnection()
+
   }
 
   /**
@@ -35,6 +37,17 @@ export default class TagsController extends ApiController {
     return res
   }
 
+  getResponse = (data, error) => {
+
+    let response = super.getBasicResponse(data, error)
+
+    response.data = {
+        'tags': data,
+    }
+
+    return response
+  }
+
   /**
    * Returns the data with books list.
    *
@@ -44,7 +57,6 @@ export default class TagsController extends ApiController {
   OldgetAll = (req, res) => {
 
     let connection = this.client.get()
-
     // eslint-disable-next-line no-console
     console.log('connection:', connection)
 
@@ -70,13 +82,18 @@ export default class TagsController extends ApiController {
     return res
   }
 
+  /**
+   * Return all tags from MongoDB
+   *
+   * @returns {*}
+   */
   getAll = () => {
     this.client.get()
-
-    return TagModel.find({}, null).exec().then((tags) => {
+    return TagModel.find({}, null).exec()
+    .then((tags) => {
       return tags
     }).catch((err) => {
-      throw err;
+      throw err
     })
   }
 

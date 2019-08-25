@@ -52,13 +52,19 @@ export default class MongooseConnection {
    * @returns {Promise}
    * @api public
    */
-  connect = () => {
+  connect = (options) => {
     return new Promise((resolve, reject) => {
-      const options = {};
+
+      let localOptions = {}
+      if (options === undefined) {
+        localOptions = this.config.connectOptions.options;
+      }
+
       if (!this.connection) {
         this.connection = mongoose.connection;
       }
-      mongoose.connect(this._getMongoUri(), options)
+
+      mongoose.connect(this._getMongoUri(), localOptions)
       .then(() => resolve(this.connection))
       .catch(err => reject(err));
     });
@@ -160,11 +166,4 @@ export default class MongooseConnection {
       ? `/${this.config.connectOptions.database}`
       : ''
   }
-
-  _composeOptionsforConnection = () => {
-    return {
-      options: this.config.connectOptions.options,
-    }
-  }
-
 }
