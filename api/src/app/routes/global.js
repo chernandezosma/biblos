@@ -13,7 +13,8 @@ import * as config from '../config/biblos'
 const globalRoutes = express.Router()
 
 globalRoutes.route('/').get(function (req, res) {
-  res.status = HTTP_CODES.HTTP_OK
+
+  res.statusCode = HTTP_CODES.HTTP_OK
   res.locals.data = 'Root without API ' + config.API_VERSION
   res.json(res.locals.data)
 })

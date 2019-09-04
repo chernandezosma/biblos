@@ -9,7 +9,7 @@
 
 const auth = (req, res, next) => {
   // eslint-disable-next-line no-console
-  console.log('Auth method');
+  console.log('****** Auth method');
   next()
 }
 

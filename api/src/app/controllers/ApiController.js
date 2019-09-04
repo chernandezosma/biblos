@@ -18,7 +18,7 @@ export default class ApiController {
    * @returns {{product: string, version: string}}
    */
   getVersion = (req, res) => {
-    res.status = HTTP_CODES.HTTP_OK
+    res.statusCode = HTTP_CODES.HTTP_OK
     res.locals.data = this.getInfo()
 
     return res
@@ -50,7 +50,7 @@ export default class ApiController {
     }
   }
 
-  getBasicResponse = (data, error) => {
+  getResponse = (data, error) => {
 
     let response = this.getInfo()
 

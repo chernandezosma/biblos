@@ -17,7 +17,7 @@ export default class BooksController {
    * @returns {{product: string, version: string}}
    */
   getRoot  = (req, res) => {
-    res.status = HTTP_CODES.HTTP_OK
+    res.statusCode = HTTP_CODES.HTTP_OK
     res.locals.data = {
       'data': {
         'message': 'Books Root'
@@ -33,7 +33,7 @@ export default class BooksController {
    * @returns {{data: {books: *[]}}}
    */
   getAll = (req, res) => {
-    res.status = HTTP_CODES.HTTP_OK
+    res.statusCode = HTTP_CODES.HTTP_OK
     res.locals.data = {
       'data': {
         'books': [

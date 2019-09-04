@@ -14,11 +14,11 @@ import ApiController from './ApiController'
 
 export default class TagsController extends ApiController {
 
-  constructor () {
+  constructor (apiController) {
 
     super();
     this.client = new MongooseConnection()
-
+    this.apiController = apiController
   }
 
   /**
@@ -27,7 +27,7 @@ export default class TagsController extends ApiController {
    * @returns {{product: string, version: string}}
    */
   getRoot = (req, res) => {
-    res.status = HTTP_CODES.HTTP_OK
+    res.statusCode = HTTP_CODES.HTTP_OK
     res.locals.data = {
       'data': {
         'message': 'Tags Root',
@@ -38,9 +38,7 @@ export default class TagsController extends ApiController {
   }
 
   getResponse = (data, error) => {
-
-    let response = super.getBasicResponse(data, error)
-
+    let response = this.apiController.getResponse(data, error)
     response.data = {
         'tags': data,
     }
@@ -49,59 +47,29 @@ export default class TagsController extends ApiController {
   }
 
   /**
-   * Returns the data with books list.
-   *
-   * @returns {{data: {books: *[]}}}
-   * @deprecated
-   */
-  OldgetAll = (req, res) => {
-
-    let connection = this.client.get()
-    // eslint-disable-next-line no-console
-    console.log('connection:', connection)
-
-    TagModel.find({}, null, (err, tags) => {
-      if (err) {
-        // eslint-disable-next-line no-console
-        console.log('ERROR:', err)
-      } else {
-        // eslint-disable-next-line no-console
-        console.log('tags => ', tags)
-
-        res.status = HTTP_CODES.HTTP_OK
-        res.locals.data = {
-          'data': {
-            'tags': [
-              tags,
-            ],
-          },
-        }
-      }
-    })
-
-    return res
-  }
-
-  /**
    * Return all tags from MongoDB
    *
    * @returns {*}
    */
-  getAll = () => {
+  getAll = (req, res) => {
     this.client.get()
     return TagModel.find({}, null).exec()
     .then((tags) => {
-      return tags
+      res.statusCode = HTTP_CODES.HTTP_OK
+      res.locals.data = this.getResponse(tags)
+
+      return res
     }).catch((err) => {
+      res.statusCode = HTTP_CODES.HTTP_INTERNAL_SERVER_ERROR
       throw err
     })
   }
 
   save = (req, res) => {
-    res.status = HTTP_CODES.HTTP_OK
+    res.statusCode = HTTP_CODES.HTTP_OK
 
     if (req.is('json') !== 'json') {
-      res.status = HTTP_CODES.HTTP_BAD_REQUEST
+      res.statusCode = HTTP_CODES.HTTP_BAD_REQUEST
       res.locals.data = {
         'data': {
           'message': 'The body must be in JSON format.',
@@ -124,7 +92,7 @@ export default class TagsController extends ApiController {
         },
       }
     } catch (err) {
-      res.status = HTTP_CODES.HTTP_INTERNAL_SERVER_ERROR
+      res.statusCode = HTTP_CODES.HTTP_INTERNAL_SERVER_ERROR
       res.locals.data = {
         'data': {
           'message': err,

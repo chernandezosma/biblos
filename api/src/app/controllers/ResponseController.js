@@ -20,7 +20,7 @@ export default class ResponseController {
    * @returns {*}
    */
   composeResponse = (req, res) => {
-    res.status = HTTP_CODES.HTTP_OK
+    res.statusCode = HTTP_CODES.HTTP_OK
     res.locals.data = {}
 
     return res
