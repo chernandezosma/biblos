@@ -22,20 +22,44 @@ const tagsSchema = new Schema({
     type: String,
     required: true,
   },
+  options: {
+    toObject: {
+      hide: ['_id', '__v']
+    },
+    toJSON: {
+      hide: ['_id', '__v']
+    }
+  }
 })
 
-tagsSchema.index({ 'code': 1 })
-tagsSchema.index({ 'tagText': 1 })
+tagsSchema.index({
+  'code': 1,
+  'tagText': 1
+})
 
-// specify the transform schema option
-if (!tagsSchema.options.toObject) {
-  tagsSchema.options.toObject = {};
-}
+tagsSchema.options = {
+  toObject: {
+    transform: (doc, ret, options) => {
+      if (options.hide) {
+        options.hide.forEach(function (prop) {
+          delete ret[prop];
+        });
+      }
 
-tagsSchema.options.toObject.transform = (doc, ret, options) => {
-  // remove the _id of every document before returning the result
-  delete ret._id
-  delete ret.__v
+      return ret;
+    }
+  },
+  toJSON: {
+    transform: (doc, ret, options) => {
+      if (options.hide) {
+        options.hide.forEach(function (prop) {
+          delete ret[prop];
+        });
+      }
+
+      return ret;
+    }
+  }
 }
 
 let tagsModel = mongoose.model('Tags', tagsSchema)
