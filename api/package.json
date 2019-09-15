@@ -6,8 +6,8 @@
   "scripts": {
     "build": "rm -rf dist && webpack --mode development --config ./webpack.dev.config.js",
     "start": "node ./dist/index.js",
-    "nodemon": "ls -la ./dist/ && nodemon --inspect=56745 ./dist/index.js",
-    "watch:backEnd": "webpack --watch --mode \"development\" --config ./webpack.dev.config.js && nodemon ./dist/index.js",
+    "nodemon": "ls -la ./dist/ && nodemon --inspect ./dist/index.js",
+    "watch:backEnd": "webpack --watch --mode \"development\" --config ./webpack.dev.config.js && nodemon --inspect ./dist/index.js",
     "start:backEnd": "npm-run-all -p nodemon watch:backEnd",
     "start:dev": "npm run build && npm run start:backEnd"
   },

@@ -11,6 +11,7 @@ import TagModel from '../models/tags'
 import * as HTTP_CODES from '../config/httpcodes'
 import MongooseConnection from '../../app/connectors/mongo'
 import ApiController from './ApiController'
+import TagsRepository from '../repositories/tagsRepository'
 
 export default class TagsController extends ApiController {
 
@@ -47,22 +48,18 @@ export default class TagsController extends ApiController {
   }
 
   /**
-   * Return all tags from MongoDB
+   * end-point to get all tags.
    *
-   * @returns {*}
+   * @param req
+   * @param res
+   * @returns {Promise<void>}
    */
-  getAll = (req, res) => {
-    this.client.get()
-    return TagModel.find({}, null).exec()
-    .then((tags) => {
-      res.statusCode = HTTP_CODES.HTTP_OK
-      res.locals.data = this.getResponse(tags)
+  getAllTags = async(req, res) => {
 
-      return res
-    }).catch((err) => {
-      res.statusCode = HTTP_CODES.HTTP_INTERNAL_SERVER_ERROR
-      throw err
-    })
+    const tagsRepo = new TagsRepository();
+
+    let data = await tagsRepo.getAll(res);
+    return this.getResponse(data.locals.data);
   }
 
   save = (req, res) => {

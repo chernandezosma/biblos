@@ -30,7 +30,7 @@ tagsRouter.route('/').get((req, res) => {
  */
 tagsRouter.route('/tags').get(async(req, res) => {
   const tagsController = new TagController(new ApiController())
-  await tagsController.getAll(req, res)
+  await tagsController.getAllTags(req, res)
 
   res.json(res.locals.data);
 })
